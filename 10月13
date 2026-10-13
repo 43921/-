@@ -1,0 +1,64 @@
+import sys
+n, k = map(int, sys.stdin.readline().split())
+cnt = [0] * k
+cnt[0] = 1
+pre_sum = 0
+ans = 0
+for _ in range(n):
+    x = int(sys.stdin.readline())
+    pre_sum += x
+    rem = pre_sum % k
+    ans += cnt[rem]
+    cnt[rem] += 1
+print(ans)
+
+
+
+
+import sys
+n, k = map(int, sys.stdin.readline().split())
+cnt = [0] * k
+cnt[0] = 1
+pre_sum = 0
+ans = 0
+for _ in range(n):
+    x = int(sys.stdin.readline())
+    pre_sum += x
+    rem = pre_sum % k
+    ans += cnt[rem]
+    cnt[rem] += 1
+print(ans)
+
+
+import sys
+from collections import defaultdict
+
+def main():
+    # 读入n（数字个数），k（倍数）
+    n, k = map(int, sys.stdin.readline().split())
+    
+    # 哈希字典：key=余数，value=这个余数出现过多少次
+    cnt = defaultdict(int)
+    cnt[0] = 1   # ✅重点！前缀和s0=0（0个数相加，和=0），余数0，预先记出现1次
+    
+    pre_sum = 0   # pre_sum：当前前缀和，s[R]
+    ans = 0       # 最终答案，统计有多少合法区间
+
+    for _ in range(n):
+        num = int(sys.stdin.readline()) # 读入当前数字
+        pre_sum += num                  # 累加，更新前缀和
+        
+        rem = pre_sum % k               # 求前缀和对k取余的余数
+        
+        # 前面已经出现过 cnt[rem] 个位置，它们的余数和当前rem一样
+        # 每一个这样的位置，都能和当前R组成一个k倍区间
+        ans += cnt[rem]
+        
+        # 把当前余数，存入哈希表，给后面的数使用
+        cnt[rem] += 1
+    
+    print(ans)
+
+if __name__ == "__main__":
+    main()
+
